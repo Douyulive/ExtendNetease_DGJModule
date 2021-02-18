@@ -19,7 +19,7 @@ namespace ExtendNetease_DGJModule
             request.Method = "GET";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             request.UserAgent = userAgent;
             if (!string.IsNullOrEmpty(cookie))
             {
@@ -52,7 +52,7 @@ namespace ExtendNetease_DGJModule
             request.Method = "GET";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             request.UserAgent = userAgent;
             if (!string.IsNullOrEmpty(cookie))
             {
@@ -84,7 +84,7 @@ namespace ExtendNetease_DGJModule
             request.Method = "GET";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             request.UserAgent = userAgent;
             if (!string.IsNullOrEmpty(cookie))
             {
@@ -129,7 +129,7 @@ namespace ExtendNetease_DGJModule
             request.ContentType = "application/x-www-form-urlencoded";
             request.UserAgent = userAgent;
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             if (!string.IsNullOrEmpty(cookie))
             {
                 request.Headers.Add("Cookie", cookie);
@@ -181,7 +181,7 @@ namespace ExtendNetease_DGJModule
             request.ContentType = "application/x-www-form-urlencoded";
             request.UserAgent = userAgent;
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             if (!string.IsNullOrEmpty(cookie))
             {
                 request.Headers.Add("Cookie", cookie);
@@ -235,7 +235,7 @@ namespace ExtendNetease_DGJModule
             request.Method = "GET";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             request.UserAgent = userAgent;
             if (!string.IsNullOrEmpty(cookie))
             {
@@ -306,7 +306,8 @@ namespace ExtendNetease_DGJModule
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             request.ProtocolVersion = HttpVersion.Version11;
             request.Method = "GET";
-            if (timeout != 0) request.Timeout = timeout * 1000;
+            if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             request.UserAgent = userAgent;
             request.CookieContainer = Cookie;
             if (headers != null)
@@ -348,7 +349,7 @@ namespace ExtendNetease_DGJModule
             request.ProtocolVersion = HttpVersion.Version11;
             request.Method = "GET";
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             request.UserAgent = userAgent;
             request.CookieContainer = Cookie;
             if (headers != null)
@@ -391,7 +392,7 @@ namespace ExtendNetease_DGJModule
             request.ContentType = "application/x-www-form-urlencoded";
             request.UserAgent = userAgent;
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             request.CookieContainer = Cookie;
             if (headers != null)
             {
@@ -456,7 +457,7 @@ namespace ExtendNetease_DGJModule
             request.ContentType = "application/x-www-form-urlencoded";
             request.UserAgent = userAgent;
             if (timeout != 0) { request.Timeout = timeout * 1000; request.ReadWriteTimeout = timeout * 1000; }
-            else request.ReadWriteTimeout = 10000;
+            else { request.Timeout = 3000; request.ReadWriteTimeout = 10000; }
             request.CookieContainer = Cookie;
             if (headers != null)
             {
