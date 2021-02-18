@@ -1,4 +1,4 @@
-﻿using BilibiliDM_PluginFramework;
+﻿using DouyuDM_PluginFramework;
 using DGJv3;
 using ExtendNetease_DGJModule.NeteaseMusic;
 using System;
@@ -18,9 +18,8 @@ namespace ExtendNetease_DGJModule
         public PluginMain()
         {
             this.PluginName = "本地网易云喵块";
-            try { this.PluginAuth = BiliUtils.GetUserNameByUserId(35744708); }
-            catch { this.PluginAuth = "西井丶"; }
-            this.PluginCont = "847529602@qq.com";
+            this.PluginAuth = "Coel Wu & 西井丶";
+            this.PluginCont = "coelwu78@protonmail.com";
             this.PluginDesc = "可以添加歌单和登录网易云喵~";
             this.PluginVer = NeteaseMusicApi.Version;
             base.Start();
@@ -86,7 +85,7 @@ namespace ExtendNetease_DGJModule
             try
             {
                 Assembly dgjAssembly = Assembly.GetAssembly(typeof(SearchModule)); //如果没有点歌姬插件，插件的构造方法会抛出异常，无需考虑这里的assembly == null的情况
-                DMPlugin dgjPlugin = Bililive_dm.App.Plugins.FirstOrDefault(p => p.GetType() == typeof(DGJMain));
+                DMPlugin dgjPlugin = Douyulive_dm.App.Plugins.FirstOrDefault(p => p.GetType() == typeof(DGJMain));
                 if (dgjPlugin == null) // 没有点歌姬
                 {
                     throw new DllNotFoundException();
@@ -103,11 +102,11 @@ namespace ExtendNetease_DGJModule
                 object searchModules = dgjWindow.GetType().GetProperty("SearchModules", BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public).GetValue(dgjWindow);
                 ObservableCollection<SearchModule> searchModules2 = (ObservableCollection<SearchModule>)searchModules.GetType().GetProperty("Modules", BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public).GetValue(searchModules);
                 SearchModule nullModule = (SearchModule)searchModules.GetType().GetProperty("NullModule", BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance).GetValue(searchModules);
-                SearchModule lwlModule = searchModules2.FirstOrDefault(p => p != nullModule);
+                SearchModule coelModule = searchModules2.FirstOrDefault(p => p != nullModule);
                 ExtendNeteaseModule = new ExtendNeteaseModule();
-                if (lwlModule != null)
+                if (coelModule != null)
                 {
-                    Action<string> logHandler = (Action<string>)lwlModule.GetType().GetProperty("_log", BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(lwlModule);
+                    Action<string> logHandler = (Action<string>)coelModule.GetType().GetProperty("_log", BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(coelModule);
                     ExtendNeteaseModule.SetLogHandler(logHandler);
                 }
                 searchModules2.Insert(2, ExtendNeteaseModule);

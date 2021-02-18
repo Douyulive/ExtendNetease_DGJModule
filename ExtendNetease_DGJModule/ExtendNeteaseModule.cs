@@ -1,5 +1,7 @@
 ﻿using DGJv3;
 using ExtendNetease_DGJModule.NeteaseMusic;
+using Music.SDK.Models;
+using Music.SDK.Models.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -48,10 +50,8 @@ namespace ExtendNetease_DGJModule
 
         public ExtendNeteaseModule()
         {
-            string authorName;
-            try { authorName = BiliUtils.GetUserNameByUserId(35744708); }
-            catch { authorName = "西井丶"; }
-            SetInfo("本地网易云喵块", authorName, "847529602@qq.com", NeteaseMusicApi.Version, "可以添加歌单和登录网易云喵~");
+            string authorName = "Coel Wu & 西井丶";
+            SetInfo("本地网易云喵块", authorName, "coelwu78@protonmail.com", NeteaseMusicApi.Version, "可以添加歌单和登录网易云喵~");
             this.GetType().GetProperty("IsPlaylistSupported", BindingFlags.SetProperty | BindingFlags.Public | BindingFlags.Instance).SetValue(this, true); // Enable Playlist Supporting
         }
 
@@ -65,21 +65,17 @@ namespace ExtendNetease_DGJModule
             throw new NotImplementedException();
         }
 
-        protected override string GetDownloadUrl(SongItem songInfo)
+        protected override string GetDownloadUrl(SongItem songItem)
         {
             try
             {
-                long songId = long.Parse(songInfo.SongId);
+                long songId = songItem.SongId;
                 DownloadSongInfo ds = MainConfig.Instance.LoginSession.LoginStatus ?
                 _GetDownloadSongInfo(MainConfig.Instance.LoginSession, songId, MainConfig.Instance.Quality) :
                 _GetDownloadSongInfo(songId, MainConfig.Instance.Quality);
                 if (ds != null)
                 {
-                    if (ds.Type.ToLower() == "mp3")
-                    {
-                        return ds.Url;
-                    }
-                    Log($"由于点歌姬目前只支持播放mp3格式,当前单曲:{string.Join(";", songInfo.Singers)} - {songInfo.SongName} 格式:{ds.Type} 无法播放喵");
+                    return ds.Url;
                 }
                 else
                 {
@@ -97,13 +93,25 @@ namespace ExtendNetease_DGJModule
             return null; // 返回null, 点歌姬会自动移除掉当前歌曲
         }
 
-        [Obsolete("Use GetLyricById instead", true)]
-        protected override string GetLyric(SongItem songInfo)
+        protected override string GetLyric(SongItem songItem)
         {
-            throw new NotSupportedException();
+            LyricInfo lyric = null;
+            try
+            {
+                lyric = _GetLyric(songItem.SongId);
+            }
+            catch (WebException e)
+            {
+                Log($"获取歌词失败了喵:{e.Message}\r\n这是由于网络原因导致获取失败, 如果多次出现, 请检查你的网络连接喵。");
+            }
+            catch (Exception e)
+            {
+                Log($"获取歌词失败了喵:{e.Message}");
+            }
+            return lyric?.GetLyricText();
         }
 
-        protected override string GetLyricById(string Id)
+        protected override string GetLyricById(string Id, string albumId = "")
         {
             long id = long.Parse(Id);
             LyricInfo lyric = null;
@@ -168,7 +176,7 @@ namespace ExtendNetease_DGJModule
                     }
                     Log($"以下列出的单曲,网易云暂时没有版权,所以它们被除外了喵~\n{string.Join("\n", cantPlaySongs.Select(p => $"{string.Join("; ", p.Artists.Select(q => q.Name))} - {p.Name}"))}");
                 }
-                return songs.Where(p => p.CanPlay).Select(p => new SongInfo(this, p.Id.ToString(), p.Name, p.Artists.Select(q => q.Name).ToArray(), null)).ToList();
+                return songs.Where(p => p.CanPlay).Select(p => new SongInfo(this, PlatformType.NeteaseMusic, p.Id.ToString(), p.Name, p.Artists.Select(q => q.Name).ToArray(), Convert.ToString(p.Album.Id), null)).ToList();
             }
             catch (WebException e)
             {
@@ -200,7 +208,7 @@ namespace ExtendNetease_DGJModule
                     {
                         Log($"获取歌词失败了喵:{e.Message}");
                     }
-                    return new SongInfo(this, song.Id.ToString(), song.Name, song.Artists.Select(p => p.Name).ToArray(), lyric?.GetLyricText());
+                    return new SongInfo(this, PlatformType.NeteaseMusic, song.Id.ToString(), song.Name, song.Artists.Select(p => p.Name).ToArray(), Convert.ToString(song.Album.Id), lyric?.GetLyricText());
                 }
                 else
                 {

@@ -16,7 +16,7 @@ using Org.BouncyCastle.Security;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using Bililive_dm;
+using Douyulive_dm;
 
 namespace ExtendNetease_DGJModule.NeteaseMusic
 {
