@@ -19,7 +19,7 @@ namespace ExtendNetease_DGJModule
         {
             try
             {
-                string configPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), @"弹幕姬\plugins\ExtendNetease");
+                string configPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), @"斗鱼弹幕姬\plugins\ExtendNetease");
                 if (!Directory.Exists(configPath))
                 {
                     Directory.CreateDirectory(configPath);
@@ -34,7 +34,7 @@ namespace ExtendNetease_DGJModule
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.ToString());
+                MessageBox.Show(e.ToString());
             }
             Instance = new MainConfig();
         }
