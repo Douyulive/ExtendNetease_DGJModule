@@ -19,7 +19,7 @@ namespace ExtendNetease_DGJModule
         {
             try
             {
-                string configPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), @"斗鱼弹幕姬\plugins\ExtendNetease");
+                string configPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), @"斗鱼弹幕姬\Plugins\ExtendNetease");
                 if (!Directory.Exists(configPath))
                 {
                     Directory.CreateDirectory(configPath);

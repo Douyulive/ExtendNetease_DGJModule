@@ -17,7 +17,7 @@ namespace ExtendNetease_DGJModule
     {
         static ExtendNeteaseModule()
         {
-            string assemblyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), @"弹幕姬\plugins\Assembly");
+            string assemblyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), @"斗鱼弹幕姬\Plugins\Assembly");
             if (!Directory.Exists(assemblyPath))
             {
                 Directory.CreateDirectory(assemblyPath);
@@ -35,7 +35,7 @@ namespace ExtendNetease_DGJModule
             string dllName = args.Name.Split(',')[0];
             if (dllName == "BouncyCastle.Crypto")
             {
-                string assemblyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), @"弹幕姬\plugins\Assembly");
+                string assemblyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), @"斗鱼弹幕姬\Plugins\Assembly");
                 return Assembly.LoadFrom(Path.Combine(assemblyPath, "BouncyCastle.Crypto.dll"));
             }
             else
